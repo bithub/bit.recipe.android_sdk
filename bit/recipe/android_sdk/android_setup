@@ -1,8 +1,0 @@
-
-
-
-export ANDROIDSDK=/home/phlax/py3/android-sdk-linux
-export ANDROIDNDK=/home/phlax/py3/android-ndk-r7
-export ANDROIDNDKVER=r7
-export ANDROIDAPI=8
-export PATH=$ANDROIDSDK/tools:$ANDROIDNDK:$PATH
