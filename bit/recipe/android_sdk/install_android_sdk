@@ -1,29 +1,30 @@
 
-WD=`pwd`
-DL=$WD/downloads
-TARGET=$WD/parts
-SDK_TOOLS="$TARGET/android-sdk/tools"
+
+DL=$BUILDOUT/downloads
+TARGET=$BUILDOUT/parts
+SDK_TOOLS="$SDKDIR/tools"
+
 
 function dl_sdk() {
-    if [ ! -d "$DL/android-sdk" ]; then
-	mkdir $DL/android-sdk -p
+    if [ ! -d "$DL/$PARTNAME" ]; then
+	mkdir $DL/$PARTNAME -p
 	echo "downloading sdk"
-	cd $DL/android-sdk && wget $DK 
+	cd $DL/$PARTNAME && wget $SDK 
     fi
 }
 
 function unpack_sdk() {
-    if [ ! -d "parts/android-sdk" ]; then
+    if [ ! -d "parts/$PARTNAME" ]; then
 	echo "unpacking sdk"
 	cd $TARGET
-	tar zxf $DL/android-sdk/$(basename $DK)
-	mv android-sdk-linux android-sdk
+	tar zxf $DL/$PARTNAME/$(basename $SDK)
+	mv android-sdk-linux $PARTNAME
 	echo "sdk installed"
     fi
 }
 
 function install_tools() {
-    if [ -d "$TARGET/android-sdk/platform-tools" ]; then
+    if [ -d "$TARGET/$PARTNAME/platform-tools" ]; then
 	return
     fi
     echo "installing sdk tools"
@@ -46,10 +47,27 @@ function install_api() {
 }
 
 
-dl_sdk
-unpack_sdk
-install_tools
-install_api
+case "$1" in
+    install)
+	dl_sdk
+	unpack_sdk
+	install_tools
+	install_api
+	;;
+    update)
+	;;
+    build)
+	;;
+	*)
+	echo "Usage: $0 {dist|build}" >&2
+	exit 1
+	;;
+esac
+
+exit 0
+
+
+
 
 
 
