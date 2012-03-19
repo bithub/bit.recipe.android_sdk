@@ -1,3 +1,58 @@
 
+WD=`pwd`
+DL=$WD/downloads
+TARGET=$WD/parts
+SDK_TOOLS="$TARGET/android-sdk/tools"
+
+function dl_sdk() {
+    if [ ! -d "$DL/android-sdk" ]; then
+	mkdir $DL/android-sdk -p
+	echo "downloading sdk"
+	cd $DL/android-sdk && wget $DK 
+    fi
+}
+
+function unpack_sdk() {
+    if [ ! -d "parts/android-sdk" ]; then
+	echo "unpacking sdk"
+	cd $TARGET
+	tar zxf $DL/android-sdk/$(basename $DK)
+	mv android-sdk-linux android-sdk
+	echo "sdk installed"
+    fi
+}
+
+function install_tools() {
+    if [ -d "$TARGET/android-sdk/platform-tools" ]; then
+	return
+    fi
+    echo "installing sdk tools"
+    cd $SDK_TOOLS && ./android update sdk -u -t 1 -t 2
+    echo "sdk tools installed"
+}
+
+
+function install_api() {    
+    for API in $APIS
+    do
+	echo "installing api: version $API"	
+	API_VERSION=`cd $SDK_TOOLS && ./android list sdk | grep "API $API" | grep Platform| cut -d- -f1 | sed -e 's/^[ \t]*//'`
+	if [ ! -n $API_VERSION ]; then
+	    continue
+	fi
+	cd $SDK_TOOLS && ./android update sdk -u -t android-$API	
+	echo "api version $API installed"
+    done
+}
+
+
+dl_sdk
+unpack_sdk
+install_tools
+install_api
+
+
+
+
 
 
