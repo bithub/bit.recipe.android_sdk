@@ -1,0 +1,29 @@
+
+
+WD=`pwd`
+DL=$WD/downloads
+TARGET=$WD/parts
+
+
+function dl_ndk() {
+    if [ ! -d "$DL/android-ndk" ]; then
+	mkdir $DL/android-ndk -p
+	echo "downloading ndk"
+	cd $DL/android-ndk && wget $DK 
+    fi
+}
+
+
+function unpack_ndk() {
+    if [ ! -d "parts/android-ndk" ]; then
+	echo "unpacking ndk"
+	cd $TARGET
+	tar xjf $DL/android-ndk/$(basename $DK)
+	NDK=`$(basename $DK) | cut -d- -f-3`
+	mv $NDK android-ndk
+	echo "ndk installed"
+    fi
+}
+
+dl_ndk
+unpack_ndk
