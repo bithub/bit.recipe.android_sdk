@@ -1,13 +1,13 @@
 from setuptools import setup, find_packages
 
 name = "bit.recipe.android_sdk"
-version = '0.0.21'
+version = '0.0.1'
 setup(
     name = name,
     version = version,
     author = "Ryan Northey",
     author_email = "ryan@3ca.org.uk",
-    description = "TCA android_sdk recipe",
+    description = "bit foundation android_sdk zc.buildout recipe",
     license = "GPL",
     keywords = "buildout",
     url='http://www.python.org/pypi/'+name,
